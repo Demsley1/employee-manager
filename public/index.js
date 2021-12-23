@@ -1,4 +1,5 @@
-const router = require('express').Router();
+const Company = require('./lib/directory');
 
+new Company().startDirectory();
 
-module.exports = router;
+module.exports = Company;

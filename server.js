@@ -3,11 +3,14 @@ const db = require('./db/connection')
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use(express.urlencoded({ entended: false }));
-app.use(express.json());
-app.use(express.static('./public'));
+const apiRoutes = require('./routes/apiRoutes');
+const Company = require('./public/index');
 
-app.use()
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use('/api', apiRoutes);
+app.use(Company);
 
 db.connect(err => {
     if(err)throw err;

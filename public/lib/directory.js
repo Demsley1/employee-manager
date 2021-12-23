@@ -1,12 +1,13 @@
 const inquirer = require('inquirer');
 const cTable = require('console.table');
+const { getDepartment } = require('./Departments');
 
-class Employee {
+class Company {
     constructor () {
         this.table = '';
     }
 
-    startDatabase() {
+    startDirectory() {
         return inquirer.prompt ([
             {
                 type: 'list',
@@ -30,36 +31,54 @@ class Employee {
                 default:'View all departments'
             }
         ]).then(query => {
-            switch(query){
-                case query == 'View all departments':
-                    return 
-                case query == 'View all roles':
-                    return
-                case query == 'Add a department':
-                    return
-                case query == 'Add a role':
-                    return
-                case query == 'Add an employee':
-                    return
-                case query == 'Update an employee role':
-                    return
-                case query == 'Update employee managers':
-                    return
-                case query == 'View employees by the managers':
-                    return
-                case query == 'View employees by the depeartment':
-                    return
-                case query == 'Delete a department':
-                    return 
-                case query == 'Delete a role':
-                    return 
-                case query == 'Delete an employee':
-                    return 
+            const { directory } = query;
+            switch(directory.valueOf()){
+                case 'View all departments':
+                    return this.Departments();
+                case 'View all employees':
+                    return this.Employees();
+                case 'View all roles':
+                    return this.Roles();
+                case 'Add a department':
+                    return this.Departments();
+                case 'Add a role':
+                    return this.Roles();
+                case 'Add an employee':
+                    return this.Employees();
+                case 'Update an employee role':
+                    return this.Employees();
+                case 'Update employee managers':
+                    return this.Employees();
+                case 'View employees by the managers':
+                    return this.Employees();
+                case 'View employees by the department':
+                    return this.Employees();
+                case 'Delete a department':
+                    return this.Departments();
+                case 'Delete a role':
+                    return this.Roles();
+                case 'Delete an employee':
+                    return this.Employees();
                 default:
-                    break;
+                    return;
             };
         });
     }
 
-    
-}
+    Departments() {    
+        getDepartment();  
+        
+        this.startDirectory();
+    }
+
+    Employees() {
+
+    };
+
+    Roles() {
+
+    };
+
+};
+
+module.exports = Company ;
