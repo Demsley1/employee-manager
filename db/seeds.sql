@@ -1,3 +1,6 @@
+DELETE FROM departments;
+DELETE FROM roles;
+DELETE FROM employees;
 INSERT INTO departments (name)
 VALUES 
 ('Accounting'),
@@ -27,20 +30,21 @@ VALUES
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
-('Sasha', 'Wiseman', 1),
-('Carl', 'Saxon', 2, 15),
-('Kristen', 'Lampare', 3, 15),
-('Brandon', 'Collins', 4),
-('Jamal', 'Mitchell', 5, 28),
-('Maurice', 'Crandalf', 6, 28),
-('Marie', 'Fortino', 7, 28),
-('Carla', 'Stevens', 8, 28),
-('Bernice', 'Watkins', 9),
-('Brad', 'Jackson', 10, 32),
-('Gary', 'Feldman', 10, 32),
-('Alesha', 'Trimane', 11),
-('Steve', 'Aberamie', 12, 10),
-('Frank', 'Whitehall', 13, 10),
-('Monique', 'Deary', 14),
-('Nicholas', 'Desfaye', 15, 54),
-('Sara', 'Graham', 16, 54);
+('Sasha', 'Wiseman', 1, NULL),
+('Carl', 'Saxon', 2, 1),
+('Rasha', 'Kapesh', 3, 1),
+('Kristen', 'Lampare', 3, 1),
+('Brandon', 'Collins', 4, NULL),
+('Jamal', 'Mitchell', 5, 5),
+('Maurice', 'Crandalf', 6, 5),
+('Marie', 'Fortino', 7, 5),
+('Carla', 'Stevens', 8, 5),
+('Bernice', 'Watkins', 9, NULL),
+('Brad', 'Jackson', 10, 10),
+('Gary', 'Feldman', 10, 10),
+('Alesha', 'Trimane', 11, NULL),
+('Steve', 'Aberamie', 12, 13),
+('Frank', 'Whitehall', 13, 13),
+('Monique', 'Deary', 14, NULL),
+('Nicholas', 'Desfaye', 15, 16),
+('Sara', 'Graham', 16, 16);

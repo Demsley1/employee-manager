@@ -18,12 +18,16 @@ router.get('/employees', (req, res) => {
 
 // Get employees table with links to all tables included
 router.get('/employees/all', (req, res) => {
-    const sql = `SELECT * FROM employees
+    const sql = `SELECT *,
+    CONCAT(m.first_name, ' ', m.last_name) AS manager
+    FROM employees m
+    RIGHT JOIN employees e
+    ON m.id = e.manager_id
     LEFT JOIN roles
-    ON employees.role_id = roles.id
+    ON e.role_id = roles.id
     LEFT JOIN departments
     ON roles.department_id = departments.id
-    ORDER BY manager_id ASC;`;
+    `;
 
     db.query(sql, (err, rows) => {
         if(err){
@@ -36,9 +40,34 @@ router.get('/employees/all', (req, res) => {
     });
 });
 
+// Get the employee by manager
+router.get('/employees/:id', (req, res) => {
+    const sql = `SELECT *,
+    CONCAT(e.first_name, ' ', e.last_name) AS employee ,
+    CONCAT(m.first_name, ' ', m.last_name) AS manager
+    FROM employees e
+    INNER JOIN employees m
+    ON m.id = e.manager_id
+    LEFT JOIN roles
+    ON e.role_id = roles.id
+    LEFT JOIN departments
+    ON roles.department_id = departments.id
+    WHERE e.manager_id = ?`;
+    const params = req.params.id
+    db.query(sql, params, (err, rows) => {
+        if(err){
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({
+            data: rows
+        });
+    });
+});
+
 // Add a new employee
 router.post('/employees', ({ body }, res) => {
-    const errors = inputCheck(body, 'first_name', 'last_name', 'role_id', 'manager_id');
+    const errors = inputCheck(body, 'first_name', 'last_name', 'role_id');
     if(errors){
         res.status(400).json({ error: errors });
         return;
