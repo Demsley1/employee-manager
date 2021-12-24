@@ -41,7 +41,7 @@ router.delete('/departments/:id', (req, res) => {
 
     db.query(sql, params, (err, result) => {
         if(err){
-            res.statusMessage(400).json({ errors: res.message });
+            res.statusMessage(400).json({ error: res.message });
         } else if(!result.affectedRows){
             res.json({
                 message: 'Department not found'
