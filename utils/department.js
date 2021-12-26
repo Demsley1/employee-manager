@@ -56,7 +56,7 @@ class Department extends Company{
         ]).then(val => {
             const { id } = val
             const sql = `SELECT employees.*, departments.name 
-                AS departments_name, 
+                AS department_name, 
                 roles.title AS role_title
                 FROM employees
                 LEFT JOIN roles 

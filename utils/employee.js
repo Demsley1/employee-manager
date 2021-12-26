@@ -88,6 +88,100 @@ class Employee extends Company{
         });    
     }
 
+    updateRole(){
+        return inquirer.prompt([
+            {
+                type: "number",
+                name: "id",
+                message: "What is the id of the employee you would like to update?"
+            },
+            {
+                type: "number",
+                name: "role_id",
+                message: "Please provide the new id of the role you would like to assign to employee:"
+            }
+        ]).then(data => {
+            const { id, role_id } = data
+            const sql = `UPDATE employees SET role_id = ?
+                WHERE id = ?`;
+            const params = [role_id, id];
+            db.query(sql, params, (err, result) => {
+                if(err){
+                    console.log(err)
+                    return;
+                } else if(!result.affectedRows){                
+                    console.log("No employee was found");
+                } else {
+                    console.log(result.affectedRows)
+                }
+            });
+        });
+    }
+
+    updateManager(){
+        return inquirer.prompt([
+            {
+                type: "number",
+                name: "id",
+                message: "What is the id of the employee you would like to update?"
+            },
+            {
+                type: "number",
+                name: "manager_id",
+                message: "Please provide the id of the manager you are assigning to employee:"
+            }
+        ]).then(data => {
+            const { id, manager_id } = data;
+            const sql = `UPDATE employees SET manager_id = ?
+                WHERE id = ?`;
+            const params = [manager_id, id];
+        
+            db.query(sql, params, (err, result) => {
+                if(err){
+                    console.log(err);
+                    return;
+                } else if(!result.affectedRows){
+                    console.log("No employees was found")
+                } else {
+                    console.log({
+                        changes: result.affectedRows,
+                        data: params
+                    });
+                }
+            });
+        });
+    }
+
+    searchManager(){
+        return inquirer.prompt([
+            {
+                type: "number",
+                name: "id",
+                message: "What is the id of the manager whose employee's you would like to see?"
+            }
+        ]).then(data => {
+            const { id } = data;
+            const sql = `SELECT *,
+            CONCAT(e.first_name, ' ', e.last_name) AS employee ,
+            CONCAT(m.first_name, ' ', m.last_name) AS manager
+            FROM employees e
+            INNER JOIN employees m
+            ON m.id = e.manager_id
+            LEFT JOIN roles
+            ON e.role_id = roles.id
+            LEFT JOIN departments
+            ON roles.department_id = departments.id
+            WHERE e.manager_id = ?`;
+
+            db.query(sql, id, (err, rows) => {
+                if(err){
+                   console.log(err)
+                    return;
+                }
+                console.table('Employees by Manager', rows);
+            });
+        });
+    }
 
 }
 

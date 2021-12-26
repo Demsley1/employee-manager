@@ -3,6 +3,7 @@ const cTable = require('console.table');
 // Import functions that start the query for each choice
 const Department = require('./utils/department');
 const Employee = require('./utils/employee');
+const Role = require('./utils/role');
 
 const startDirectory = () => {
     return inquirer.prompt([
@@ -31,37 +32,43 @@ const startDirectory = () => {
         const { directory } = query;
         switch (directory.valueOf()) {
             case 'View all departments':
-                new Department().getDepartment();
+                new Department().getDepartment()
                 return startDirectory();
             case 'View all employees':
-                new Employee().showCompany();
+                new Employee().showCompany()
                 return startDirectory();
             case 'View all roles':
-                return Roles(directory);
+                new Role().getRole()
+                return startDirectory();
             case 'Add a department':
-                new Department().addDepartment();
+                new Department().addDepartment()
                 return startDirectory();
             case 'Add a role':
-                return Roles(directory);
+                new Role().addRole()
+                return startDirectory();
             case 'Add an employee':
-                new Employee().addEmployee();
+                new Employee().addEmployee()
                 return startDirectory();
             case 'Update an employee role':
-                return Employees(directory);
+                new Employee().updateRole()
+                return startDirectory();
             case 'Update employee managers':
-                return Employees(directory);
+                new Employee().updateManager()
+                return startDirectory();
             case 'View employees by the managers':
-                return Employees(directory);
+                new Employee().searchManager()
+                return startDirectory();
             case 'View employees by the department':
                 new Department().searchEmployeeDept()
                 return startDirectory();
             case 'Delete a department':
-                new Department().deleteDepartment();
+                new Department().deleteDepartment()
                 return startDirectory();
             case 'Delete a role':
-                return Roles(directory);
+                new Role().deleteRole()
+                return startDirectory();
             case 'Delete an employee':
-                new Employee().deleteEmployee();
+                new Employee().deleteEmployee()
                 return startDirectory();
             default:
                 break;
