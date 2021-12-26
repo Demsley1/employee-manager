@@ -2,10 +2,10 @@
   "name": "employee-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "directory.js",
+  "main": "directorys.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node directory.js"
+    "start": "node directorys.js"
   },
   "repository": {
     "type": "git",
