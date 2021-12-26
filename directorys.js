@@ -24,6 +24,7 @@ class Works{
                 return;
             } else{
                 console.table('All Employees', rows);
+                startDirectory();
             }
         });
     }
@@ -63,6 +64,7 @@ class Works{
                     console.log('Department could not be added at this time. Sorry!');
                 }else {
                     console.log(`The department ${name} was added to database`)
+                    startDirectory();
                 }
             });
         });
@@ -120,6 +122,7 @@ class Works{
                     console.log('Department not found')  
                 }
                 console.log(result.affectedRows);
+                startDirectory();
             });
         });
     }
@@ -133,7 +136,9 @@ class Works{
                 console.log("There was no response from database")
                 return;
             }
-               console.table('Roles', rows);
+            
+            console.table('Roles', rows);
+            startDirectory();
         });
     }
 
@@ -172,6 +177,7 @@ class Works{
                    console.log(err);
                 }
                 console.log(result)
+                startDirectory();
             });
         });
     }
@@ -198,6 +204,7 @@ class Works{
                         changes: result.affectedRows,
                         id: id
                     });
+                    startDirectory();
                 };
             });
         });
@@ -252,6 +259,7 @@ class Works{
                     return;
                 }
                 console.log(result)
+                startDirectory();
             });
 
         })
@@ -280,6 +288,7 @@ class Works{
                        changes: result.affectedRows,
                        id: id
                     })
+                    startDirectory();
                 }
             });
         });    
@@ -310,6 +319,7 @@ class Works{
                     console.log("No employee was found");
                 } else {
                     console.log(result.affectedRows)
+                    startDirectory();
                 }
             });
         });
@@ -344,6 +354,7 @@ class Works{
                         changes: result.affectedRows,
                         data: params
                     });
+                    startDirectory();
                 }
             });
         });
@@ -376,9 +387,54 @@ class Works{
                     return;
                 }
                 console.table('Employees by Manager', rows);
+                startDirectory();
             });
         });
     }
+}
+
+function querys(command) {
+
+    if(command.valueOf() == 'View all departments'){
+        new Works().getDepartment();
+    }
+    if(command.valueOf() == 'View all employees'){
+        new Works().getAllEmployees()
+    }
+    if(command.valueOf() == 'View all roles'){
+        new Works().getRole()
+    }
+    if(command.valueOf() =='Add a department'){
+        new Works().addDepartment();
+    }
+    if(command.valueOf() == 'Add a role'){
+        new Works().addRole()
+    }
+    if(command.valueOf() == 'Add an employee'){
+        new Works().addEmployee()
+    }
+    if(command.valueOf() == 'Update an employee role'){
+        new Works().updateRole()
+    }
+    if(command.valueOf() == 'Update employee managers'){
+        new Works().updateManager()
+    }
+    if(command.valueOf() == 'View employees by the managers'){
+        new Works().searchManager()
+    }
+    if(command.valueOf() == 'View employees by the department'){
+        new Works().searchEmployeeDept()
+    }
+    if(command.valueOf() == 'Delete a department'){
+        new Works().deleteDepartment()
+    }
+    if(command.valueOf() == 'Delete a role'){
+        new Works().deleteRole()
+    }
+    if(command.valueOf() == 'Delete an employee'){
+        new Works().deleteEmployee()
+    }
+
 }
 
 function startDirectory () {
@@ -406,52 +462,12 @@ function startDirectory () {
         }
     ]).then(query => {
         const { directory } = query;
-        switch (directory.valueOf()) {
-            case 'View all departments':
-                new Works().getDepartment()
-                startDirectory();
-            case 'View all employees':
-                new Works().getAllEmployees()
-                startDirectory();
-            case 'View all roles':
-                new Works().getRole()
-                startDirectory();
-            case 'Add a department':
-                new Works().addDepartment();
-                startDirectory();
-            case 'Add a role':
-                new Works().addRole()
-                startDirectory();
-            case 'Add an employee':
-                new Works().addEmployee()
-                startDirectory();
-            case 'Update an employee role':
-                new Works().updateRole()
-                startDirectory();
-            case 'Update employee managers':
-                new Works().updateManager()
-                startDirectory();
-            case 'View employees by the managers':
-                new Works().searchManager()
-                startDirectory();
-            case 'View employees by the department':
-                new Works().searchEmployeeDept()
-                startDirectory();
-            case 'Delete a department':
-                new Works().deleteDepartment()
-                startDirectory();
-            case 'Delete a role':
-                new Works().deleteRole()
-                startDirectory();
-            case 'Delete an employee':
-                new Works().deleteEmployee()
-                startDirectory();
-            default:
-                break;
-        };
+        if(directory.valueOf() == 'Quit'){
+            console.log("goodbye");
+            return;
+        }
+        return querys(directory);
     });
 }
 
 startDirectory();
-
-module.exports = Works;
