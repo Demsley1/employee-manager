@@ -4,13 +4,13 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const apiRoutes = require('./routes/apiRoutes');
-//const Company = require('./public/index');
+const directory = require('./public/lib/directory')
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use('/api', apiRoutes);
-//app.use(Company);
+app.use(express.static('directory'));
 
 db.connect(err => {
     if(err)throw err;
