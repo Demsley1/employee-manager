@@ -2,10 +2,12 @@ const db = require('./db/connection');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 
+// need to change some ids for inquirer, to name values derived from database, .aybe using query to view names and pulling the value from the query
 class Works{
     constructor(){
     }
 
+    // get the employees table with roles, and department table linked by primary key. Displays only the necessary info.
     getAllEmployees(){
         const sql = `SELECT e.id,e.first_name,e.last_name,title,salary, 
         departments.name AS department,
@@ -30,6 +32,7 @@ class Works{
         });
     }
 
+    // get the Department database and displays it as a table in the console
     getDepartment(){
         const sql = `SELECT * FROM departments`
         db.query(sql, (err, rows) => {
@@ -42,6 +45,7 @@ class Works{
         });
     };
 
+    // Lets user add a new department at a new index/id by answering specific prompts
     addDepartment(){
         return inquirer.prompt([
             {
@@ -71,6 +75,7 @@ class Works{
         });
     }
 
+    // Lets the user search for all employees that belong in a specific department, then displays the employee table with all employees that are linked to that department
     searchEmployeeDept(){
         return inquirer.prompt([
             {
@@ -104,6 +109,7 @@ class Works{
             
     }
 
+    // delete a department name from the table.
     deleteDepartment(){
         return inquirer.prompt([
             {
@@ -128,6 +134,7 @@ class Works{
         });
     }
 
+    // get all the available roles that exist in the company, and the associated departments that each role belongs too then displays it in a console table
     getRole(){
         const sql = `SELECT roles.id AS id, title, salary, department_id, departments.name AS department
         FROM roles
@@ -144,6 +151,7 @@ class Works{
         });
     }
 
+    // Add an additional employee role to the roles table by answering specific prompts
     addRole(){
         return inquirer.prompt([
             {
@@ -184,6 +192,7 @@ class Works{
         });
     }
 
+    // Delete a specific role from the table by selecting it
     deleteRole(){
         return inquirer.prompt([
             {
@@ -212,6 +221,7 @@ class Works{
         });
     }
 
+    // add an additional employee to the database by answering prompts for employee data.
     addEmployee(){
         return inquirer.prompt([
             {
@@ -268,6 +278,7 @@ class Works{
         
     }
 
+    // delete a specific employee from database
     deleteEmployee(){
         return inquirer.prompt([
             {
@@ -296,6 +307,7 @@ class Works{
         });    
     }
 
+    // update or change an employees role in company by choosing the employee then selecting the role
     updateRole(){
         return inquirer.prompt([
             {
@@ -327,6 +339,7 @@ class Works{
         });
     }
 
+    // update or change an employees manager in the company by choosing the employee then selecting the manager
     updateManager(){
         return inquirer.prompt([
             {
@@ -362,6 +375,7 @@ class Works{
         });
     }
 
+    // search for all employees in the company that belong to each specific manager.
     searchManager(){
         return inquirer.prompt([
             {
@@ -396,6 +410,7 @@ class Works{
     }
 }
 
+// this funciton handles whatever the result of the query choice that user inputs, and directs script page to each method to run based on input.
 function querys(command) {
 
     if(command.valueOf() == 'View all departments'){
@@ -437,9 +452,14 @@ function querys(command) {
     if(command.valueOf() == 'Delete an employee'){
         new Works().deleteEmployee()
     }
+    else{
+        console.log("goodbye!");
+        return;
+    }
 
 }
 
+//beginning function that asks for user inout to determine what is done with employee directory next.
 function startDirectory () {
     inquirer.prompt([
         {
