@@ -7,7 +7,8 @@ class Works{
     }
 
     getAllEmployees(){
-        const sql = `SELECT *,
+        const sql = `SELECT e.id,e.first_name,e.last_name,title,salary, 
+        departments.name AS department,
         CONCAT(m.first_name, ' ', m.last_name) AS manager
         FROM employees m
         RIGHT JOIN employees e
@@ -128,7 +129,8 @@ class Works{
     }
 
     getRole(){
-        const sql = `SELECT * FROM roles
+        const sql = `SELECT roles.id AS id, title, salary, department_id, departments.name AS department
+        FROM roles
         LEFT JOIN departments
         ON  roles.department_id = departments.id`
         db.query(sql, (err, rows) => {
@@ -369,8 +371,9 @@ class Works{
             }
         ]).then(data => {
             const { id } = data;
-            const sql = `SELECT *,
-            CONCAT(e.first_name, ' ', e.last_name) AS employee ,
+            const sql = `SELECT e.id,
+            CONCAT(e.first_name, ' ', e.last_name) AS employee,
+            title,salary, departments.name AS department,
             CONCAT(m.first_name, ' ', m.last_name) AS manager
             FROM employees e
             INNER JOIN employees m
