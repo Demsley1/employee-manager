@@ -25,7 +25,7 @@
   ![Screenshot2](./images/Screenshot2.png)
   ![Screenshot3](./images/Screenshot3.png)
 
-  - Video Link: [Video Demo]()
+  - Video Link: [Video Demo](https://watch.screencastify.com/v/VM7zG6oylNGRoVIDy6OA)
 
 
   ## *License*

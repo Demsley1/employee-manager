@@ -254,9 +254,16 @@ class Works{
                 message: "Add an id for employee role {1-16 are default values}"
             },
             {
-                type: "number",
                 name: "manager_id",
-                message: "Add an id for employees manager (manager ids can be found on employees table):"
+                message: "Add an id for employees manager (manager ids can be found on employees table):",
+                filter: value => {
+                    if(value == ""){
+                        return "NULL"
+                    }
+                    else{
+                        return value
+                    }
+                }
             }
         ]).then(data => {
             console.log(data)
@@ -452,11 +459,6 @@ function querys(command) {
     if(command.valueOf() == 'Delete an employee'){
         new Works().deleteEmployee()
     }
-    else{
-        console.log("goodbye!");
-        return;
-    }
-
 }
 
 //beginning function that asks for user inout to determine what is done with employee directory next.
